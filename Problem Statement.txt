@@ -15,3 +15,57 @@ SOLUTION EXPECTATIONS
 The solution will feature a single-agent GenAI system that accepts claims documents via a simple web UI, processes them using natural language understanding to identify regulatory compliance risks, and generates a concise compliance risk report highlighting key issues. Core deliverables include document ingestion, compliance issue detection with confidence scores, and user-friendly explanations of flagged items. Integration will utilize GenAI APIs for text analysis and a lightweight frontend for interaction. Success metrics are detection accuracy ≥85%, processing time under 10 seconds per document, and a demo showcasing a walkthrough of document upload to risk report generation. The working prototype will demonstrate how an insurance claims processor can quickly identify compliance gaps, reducing manual review effort and improving decision confidence.
 
 Feel free to explore creative solutions that align with the problem context and objectives.
+
+                    Next.js Frontend
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+     Login              Dashboard         Other Pages
+        │                  │
+        ▼                  ▼
+     FastAPI Backend / REST APIs
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+ Authentication       Claims              Documents
+        │                  │                  │
+        │                  ▼                  ▼
+        │             Claim Analysis      PDF/OCR
+        │                  │
+        │                  ▼
+        │             AI Compliance
+        │                  │
+        │                  ▼
+        │             Risk Report
+        │
+        ▼
+     Database
+
+
+     ┌──────────────────────────────┐
+│       Next.js Frontend       │
+│                              │
+│ Login / Dashboard / Claims   │
+│ Upload / Reports / Profile   │
+└──────────────┬───────────────┘
+               │ HTTP / JSON
+               ▼
+┌──────────────────────────────┐
+│       FastAPI Backend        │
+│          Python              │
+│                              │
+│ Auth │ Claims │ Documents    │
+│ AI   │ Reports │ Users       │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│         PostgreSQL           │
+│                              │
+│ Users                        │
+│ Claims                       │
+│ Documents                    │
+│ Reports                      │
+│ Compliance Issues            │
+│ Regulations                  │
+└──────────────────────────────┘
