@@ -2,7 +2,7 @@
 from email import message
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from app.database import SessionLocal, engine,Base
+from app.database import get_db, engine,Base
 from app.models.user import User
 from app.schema.user import UserCreate, UserResponse, UserLogin
 from app.auth.securirty import hash_passsword
@@ -28,12 +28,12 @@ def health_check():
 
 @app.get("/users")
 def get_users():
-    return{message: "Users"}
+    return{"message": "Users"}
 
-@app.post("/users", response_model=UserResponse)
-def create_user(user: UserCreate):
-    db: Session = SessionLocal()
-
+@app.post("/register", response_model=UserResponse)
+def create_user(user: UserCreate, 
+                db: Session = Depends(get_db)):
+       
     hashed_password = hash_passsword(user.password)
 
     new_user = User(
@@ -44,7 +44,6 @@ def create_user(user: UserCreate):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    db.close()
 
 
     return new_user

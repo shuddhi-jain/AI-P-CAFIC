@@ -1,10 +1,11 @@
-from fastapi import Request, HTTPException
+from fastapi import Request, HTTPException, Depends
 from sqlalchemy.orm import Session                
 from app.auth.jwt import decode_access_token
-from app.database import SessionLocal
+from app.database import get_db
 from app.models.user import User
 
-def get_current_user(request: Request):
+def get_current_user(request: Request,
+                     db: Session = Depends(get_db)):
     access_token = request.cookies.get("access_token")
 
     if not access_token:
@@ -21,11 +22,8 @@ def get_current_user(request: Request):
             detail="Invalid or expired token"
         )
 
-    db: Session = SessionLocal()
 
     user = db.query(User).filter(User.id == int(user_id)).first()
-
-    db.close()
 
     if not user:
         raise HTTPException(

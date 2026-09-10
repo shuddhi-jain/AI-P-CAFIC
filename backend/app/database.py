@@ -4,7 +4,12 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 engine = create_engine(settings.database_url, echo=True)
 
-
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 class Base(DeclarativeBase):
