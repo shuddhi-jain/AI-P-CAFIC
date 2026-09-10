@@ -20,7 +20,7 @@ class Policy(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    policy_no: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    policy_number: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
     policy_type: Mapped[PolicyType] = mapped_column(SQLEnum(PolicyType, name="policy_type"), nullable=False, default=PolicyType.HEALTH)
     insurer_name: Mapped[str] = mapped_column(String(100), nullable=False)
     insurer_id: Mapped[str] = mapped_column(String(100), nullable=True)

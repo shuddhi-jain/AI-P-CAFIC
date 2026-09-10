@@ -25,7 +25,7 @@ def create_access_token(user_id: int) -> str:
 
 def create_refresh_token(user_id: int) -> str:
     expire = datetime.now(timezone.utc) + timedelta(
-        minutes=REFRESH_TOKEN_EXPIRE_DAYS
+        days=REFRESH_TOKEN_EXPIRE_DAYS
     )
 
     payload = {

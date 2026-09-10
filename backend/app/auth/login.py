@@ -49,7 +49,7 @@ def login(user: UserLogin, response: Response,
             httponly=True,
             secure=False,
             samesite="lax",
-            max_age=7 * 24 * 60 * 60,
+            expires=7 * 24 * 60 * 60,
         )
 
 
@@ -72,7 +72,7 @@ def logout(response: Response):
     }
 
 @router.post("/refresh")
-def refresh_access_token(request: Request, respoonse: Response):
+def refresh_access_token(request: Request, response: Response):
     refresh_token = request.cookies.get("refresh_token")
 
     if not refresh_token:
@@ -82,7 +82,6 @@ def refresh_access_token(request: Request, respoonse: Response):
         )
 
     user_id = decode_refresh_token(refresh_token)
-
     if not user_id:
         raise HTTPException(
               status_code=401,
@@ -91,7 +90,7 @@ def refresh_access_token(request: Request, respoonse: Response):
 
     new_access_token = create_access_token(int(user_id))
 
-    respoonse.set_cookie(
+    response.set_cookie(
         key="access_token",
         value=new_access_token,
         httponly=True,
