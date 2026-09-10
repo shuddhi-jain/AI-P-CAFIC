@@ -7,6 +7,7 @@ from app.models.user import User
 from app.schema.user import UserCreate, UserResponse, UserLogin
 from app.auth.securirty import hash_passsword
 from app.auth.login import router as login_router
+from app.policies.router import router as policy_router
 from app.auth.dependencies import get_current_user
 
 
@@ -14,7 +15,7 @@ from app.auth.dependencies import get_current_user
 app = FastAPI()
 
 app.include_router(login_router)
-
+app.include_router(policy_router)
 
 Base.metadata.create_all(bind=engine)
 

@@ -5,7 +5,7 @@ from app.database import get_db
 from app.models.user import User
 
 def get_current_user(request: Request,
-                     db: Session = Depends(get_db)):
+                     db: Session = Depends(get_db))->User:
     access_token = request.cookies.get("access_token")
 
     if not access_token:

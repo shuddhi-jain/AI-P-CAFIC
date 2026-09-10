@@ -69,3 +69,34 @@ Feel free to explore creative solutions that align with the problem context and 
 │ Compliance Issues            │
 │ Regulations                  │
 └──────────────────────────────┘
+
+
+CLAIM
+                   │
+                   ▼
+              DOCUMENTS
+                   │
+                   ▼
+            PDF / OCR TEXT
+                   │
+                   ▼
+             CHUNK DOCUMENT
+                   │
+                   ▼
+              EMBEDDINGS
+                   │
+                   ▼
+          PostgreSQL + pgvector
+                   │
+                   ▼
+       RETRIEVE RELEVANT REGULATIONS
+                   │
+                   ▼
+                  LLM
+                   │
+                   ▼
+       COMPLIANCE ASSESSMENT
+                   │
+             ┌─────┴─────┐
+             ▼           ▼
+          Issues       Report
