@@ -1,12 +1,13 @@
 
 from email import message
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from app.database import SessionLocal, engine,Base
 from app.models.user import User
 from app.schema.user import UserCreate, UserResponse, UserLogin
 from app.auth.securirty import hash_passsword
 from app.auth.login import router as login_router
+from app.auth.dependencies import get_current_user
 
 
 
@@ -47,5 +48,15 @@ def create_user(user: UserCreate):
 
 
     return new_user
+
+@app.get("/protected")
+def protected_route(current_user: User = Depends(get_current_user)):
+    return {
+        "message": "You are accessing a protected route",
+        "user_id": current_user.id,
+        "name": current_user.name,
+        "email": current_user.email
+
+    }
 
 
