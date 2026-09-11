@@ -10,6 +10,7 @@ from app.auth.login import router as login_router
 from app.policies.router import router as policy_router
 from app.claims.router import router as claim_router
 from app.models.claim import Claim
+from app.models.claim_document import ClaimDocument
 from app.auth.dependencies import get_current_user
 
 
