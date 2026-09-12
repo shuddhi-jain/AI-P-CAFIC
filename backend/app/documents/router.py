@@ -46,7 +46,8 @@ def upload_claim_document(
 
     object_key = f"claims/{claim_id}/documents/{uuid.uuid4()}{extension}"
 
-    file_contents = file.file.read()
+    file.file.seek(0, 2)
+    file_size = file.file.tell()
     file.file.seek(0)
 
     upload_file_to_s3(
@@ -60,7 +61,7 @@ def upload_claim_document(
         document_type=document_type,
         file_name=file.filename or "unknown",
         file_type=file.content_type or "application/octet-stream",
-        file_size=len(file_contents),
+        file_size=file_size,
         file_url=object_key,
     )
 
