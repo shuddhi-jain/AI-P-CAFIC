@@ -17,6 +17,19 @@ transfer_config = TransferConfig(
     max_concurrency=4,
 )
 
+def generate_presigned_url(
+    object_key: str,
+    expiration: int = 900
+):
+    return s3_client.generate_presigned_url(
+        "get_object",
+        Params={
+            "Bucket": settings.aws_s3_bucket_name,
+            "Key": object_key
+        },
+        ExpiresIn=expiration
+    )
+
 def upload_file_to_s3(
         file,
         object_key: str,
