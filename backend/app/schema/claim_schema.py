@@ -9,7 +9,6 @@ class ClaimCreate(BaseModel):
     policy_id: int
     claim_number: str
     claim_amount: float
-    claim_date: datetime
     description: str
 
 

@@ -11,6 +11,7 @@ from app.policies.router import router as policy_router
 from app.claims.router import router as claim_router
 from app.models.claim import Claim
 from app.models.claim_document import ClaimDocument
+from app.documents.router import router as document_router
 from app.auth.dependencies import get_current_user
 
 
@@ -20,6 +21,8 @@ app = FastAPI()
 app.include_router(login_router)
 app.include_router(policy_router)
 app.include_router(claim_router)
+app.include_router(document_router)
+
 
 Base.metadata.create_all(bind=engine)
 

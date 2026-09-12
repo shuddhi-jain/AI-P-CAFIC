@@ -34,7 +34,6 @@ def create_claim(
         policy_id=claim.policy_id,
         claim_number=claim.claim_number,
         claim_amount=claim.claim_amount,
-        claim_date=claim.claim_date,
         description=claim.description
     )
     db.add(new_claim)

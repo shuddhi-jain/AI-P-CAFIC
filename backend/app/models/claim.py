@@ -23,7 +23,7 @@ class Claim(Base):
     claim_amount: Mapped[float] = mapped_column(
         Numeric(precision=12, scale=2), nullable=False
     )
-    claim_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    claim_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[ClaimStatus] = mapped_column(
         SQLEnum(ClaimStatus, name="claim_status"),
