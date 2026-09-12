@@ -9,7 +9,7 @@ class ClaimDocumentCreate(BaseModel):
     claim_id: int
     document_type: DocumentType
     file_name: str
-    file_type: str
+    file_type: str   
     file_size: int
     file_url: str
 
