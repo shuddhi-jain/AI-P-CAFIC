@@ -45,3 +45,11 @@ def upload_file_to_s3(
         Config=transfer_config
 
     )
+
+def download_file_from_s3(object_key: str) -> bytes:
+    response = s3_client.get_object(
+        Bucket=settings.aws_s3_bucket_name,
+        Key=object_key
+    )
+
+    return response["Body"].read()
