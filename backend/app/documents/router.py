@@ -128,3 +128,32 @@ def get_document_url(
         "expires_in": 900,
     }
 
+
+# TODO: Implement document analysis endpoint
+@router.get("/{claim_id}/documents/{document_id}/url")
+def get_document_analysis(
+    document_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    document = (
+        db.query(ClaimDocument)
+        .join(Claim, Claim.id == ClaimDocument.claim_id)
+        .join(Policy, Claim.policy_id == Policy.id)
+        .filter(ClaimDocument.id == document_id, Policy.user_id == current_user.id)
+        .first()
+    )
+
+    if not document:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found",
+        )
+
+    url = generate_presigned_url(document.file_url)
+    return {
+        "document_id": document.id,
+        "url": url,
+        "expires_in": 900,
+    }
+
