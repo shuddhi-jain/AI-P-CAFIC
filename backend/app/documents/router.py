@@ -72,7 +72,36 @@ def upload_claim_document(
     return document
 
 
-@router.get("/{document_id}/url")
+@router.get("/{claim_id}/documents", response_model=list[ClaimDocumentResponse])
+def get_claim_documents(
+    claim_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    claim = (
+        db.query(Claim)
+        .join(Policy, Claim.policy_id == Policy.id)
+        .filter(Claim.id == claim_id, Policy.user_id == current_user.id)
+        .first()
+    )
+
+    if not claim:
+        raise HTTPException(
+            status_code=404,
+            detail="Claim not found",
+        )
+
+    documents = (
+        db.query(ClaimDocument)
+        .filter(ClaimDocument.claim_id == claim_id)
+        .order_by(ClaimDocument.uploaded_at.desc())
+        .all()
+    )
+
+    return documents
+
+
+@router.get("/{claim_id}/documents/{document_id}/url")
 def get_document_url(
     document_id: int,
     db: Session = Depends(get_db),
